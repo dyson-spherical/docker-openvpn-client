@@ -37,6 +37,7 @@ while IFS= read -r line; do
         iptables --insert OUTPUT --destination "$address" --protocol "$protocol" --destination-port "$port" --jump ACCEPT
     else
         for ip in $(dig -4 +short "$address"); do
+            echo "$ip"
             iptables --insert OUTPUT --destination "$ip" --protocol "$protocol" --destination-port "$port" --jump ACCEPT
             echo "$ip $address" >> /etc/hosts
         done
